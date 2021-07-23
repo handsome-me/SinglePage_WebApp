@@ -1,0 +1,21 @@
+{
+  "name": "filepackerunpacker",
+  "version": "1.0.0",
+  "description": "We will pack and unpack file (txt format only)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/handsome-me/SinglePage_WebApp.git"
+  },
+  "author": "_shravani_",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/handsome-me/SinglePage_WebApp/issues"
+  },
+  "homepage": "https://github.com/handsome-me/SinglePage_WebApp#readme",
+  "dependencies": {}
+}
