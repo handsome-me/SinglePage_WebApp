@@ -23,6 +23,15 @@ http.createServer(function (req, res) {
   });
   
    
+  function makeTableRow(){
+    const table=document.getElementById('filelisttable');
+    table.innerHTML=`<tr >
+    <td>1</td><td>two.txt</td><td><a href="javascript:void(0)" 
+        class="up1">Up</a> &nbsp;<a href="javascript:void(0)"
+         class="down1">Down</a> &nbsp;<a href="javascript:void(0)"
+          class="del1">
+        Delete</a></td> </tr>`
+  }
 
   // This catches any errors that happen while creating the readable stream (usually invalid names)
   readStream.on('error', function(err) {

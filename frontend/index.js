@@ -4,7 +4,9 @@ const mergedFile={
 data:"",
 name:""
 }
+
  
+  
 
 
 //its when user select "choose file" and select any file from  machine(laptop/destkp/mobile/tab)
@@ -25,12 +27,7 @@ if(fileName){
 }
 fileList.push(event.target.files[0]);
 
- const filesContainer=document.getElementById('filesContainer');
-  document.createElement('div')
-   const fileContainerChild=document.createElement('div');
-   filesContainer.style="border:1px solid black"
-   fileContainerChild.innerHTML=`<h3>${event.target.files[0].name}<h3>`
- filesContainer.appendChild( fileContainerChild)
+  makeTableRow(fileName,"#");
    
 
 }
@@ -114,9 +111,9 @@ function handleFileLoad (event) {
      // downloadBtn.onclick(download(mergedFileDiv.name, mergedFileDiv.data))
       downloadBtn.addEventListener('click',()=>download(mergedFile.name,mergedFile.data))
        const loader=document.getElementById('loader');
-       console.log(loader)
+       
       loader.classList.add('disable-loader');
-
+       
        
 
      }
@@ -143,3 +140,19 @@ function download() {
   document.body.removeChild(element);
   window.location.reload();
 }
+
+
+function makeTableRow(filename, index){
+  const table=document.getElementById('filelisttable');
+  const row=table.insertRow(1);
+  const cell1=  row.insertCell(0);
+  const cell2=  row.insertCell(1);
+   cell1.innerHTML=`${index}`
+   cell2.innerHTML=`${filename}`
+   const cell3=  row.insertCell(2);
+   cell3.innerHTML=`<a href="">update</a>`
+   const cell4=  row.insertCell(3);
+   cell4.innerHTML=`<a href="">delete</a>`
+   
+}
+ 

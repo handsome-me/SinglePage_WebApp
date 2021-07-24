@@ -8,7 +8,7 @@
 .container{
      
     display: flex;
-    max-width: 500px;
+    
     flex-direction: column;
     text-align: center;
     position: relative;
@@ -106,25 +106,33 @@
     font-size: 20px;
   }
   .btn-merge{
+      
       text-align: center;
       font-size: large;
-      font-style: italic;
+      color: white;
+      padding: 10px;
       background-color: #1e90ff;
-      border-radius: 10px;
+      border-radius: 4px;
   }
   
   h2{
       margin: 0px;
   }
+  h3{
+      color:green;
+  }
 
   .filename{
 
-    margin-top: 10px;
+    
+    font-size: x-large;
+    color: black;
+     
   }
 
 .disable-loader{
 
-  display: none;
+display: none; 
    
 }
   .loader {
@@ -152,3 +160,26 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .file-container{
+      color: black !important;
+      
+      margin: 5px;
+      background-color: rgb(206, 204, 201);
+  }
+
+  table{
+    width: 100%;
+  }
+
+
+  td{
+
+    text-align: center;
+    border: 1px solid #DBDBDB;
+  }
+table{
+  border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+}
