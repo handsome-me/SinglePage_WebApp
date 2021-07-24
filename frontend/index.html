@@ -1,20 +1,53 @@
 <html>
  
+<script type="text/javascript" src="./index.js"></script>
+<link rel="stylesheet" href="./index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <body>
-    <h1>
-       File Packing _ Unpacking 
-    </h1>
-<label for="myfile">Select a file:(Note-supported format is .txt only)</label>
-<form onsubmit="return onSubmit(event)">
-    <label for="myfile">Select a file:</label>
-    <input type="file" id="myfile" name="myfile"><br><br>
-    
-    <button>submit</button>
+
+    <div class="body">
+    <div class="container">
+     <div id="loader" class="loader disable-loader"></div>
+    <div class="headingTitle">
+       File Packing  Unpacking 
+    </div>
+ 
+<form onsubmit="return onSubmit(event)" enctype="multipart/form-data">
+    <div class="file-input">
+        <label for="myfile">Select a file:(.txt)</label>
+    <input type="file" class="file-name"  onchange="onChange(event)" id="myfile" name="myfile"><br><br>
+    </div>
+    <div style="display:flex ;justify-content: center;flex-direction: column;">
+     <div style="margin: 10px;" >uploaded file</div>
+     <div style="display:flex;flex-direction: column;" id="filesContainer">
+     
+    </div>
+    </div>
+    <button class="btn-merge">Merge</button> 
+
 </form>
 
+   <div id="downloadContainer" class="downloadfiles">
+    <h2>MergedFile</h2>
+       <div id="filename" class="filename">
+       
+       </div>
+     
+    
+    
+    <button id="downloadbtn"  class="btn-download btn-download-disabled"><i class="fa fa-download"></i> Download</button>
+  
+     
+  
+   </div>   
 
-<script type="text/javascript" src="./index.js"></script>
-</script>
+ 
+    
+ 
+
+</div>
+</div>
 
 </body>
 

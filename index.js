@@ -5,10 +5,11 @@ const fs=require('fs');
 const PORT=8080;
 
 http.createServer(function (req, res) {
-
-  if (req.url == '/index.js') {
-    console.log('into index.js');
-        const readStream = fs.createReadStream(path.resolve('./frontend/index.js'));
+  console.log(req.url);
+  console.log(req.url=='/index.css');
+  if (req.url == '/index.js' || req.url == "/index.css") {
+    console.log('into ',req.url);
+        const readStream = fs.createReadStream(path.resolve('./frontend/'+req.url.slice(1)));
         res.writeHead(200,{'Content-type': 'application/javascript'});
         readStream.pipe(res);
         return;
