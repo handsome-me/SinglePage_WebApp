@@ -11,7 +11,7 @@ var unpack=false;
   
 
 
-//its when user select "choose file" and select any file from  machine(laptop/destkp/mobile/tab)
+//its when user select "choose file" and select any file frm  machine(laptop/destkp/mobile/tab)
 function onChange(event){
 console.log('file uploaded',
   event.target.files[0]
