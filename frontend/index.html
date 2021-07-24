@@ -2,7 +2,8 @@
  <head>
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
+    <script type="text/javascript" src="./index.js"></script>  
+</head>
     
 <body>
 
@@ -17,7 +18,12 @@
     <div class="headingTitle">
        File Packing  Unpacking 
     </div>
- 
+ <div class="radioboxcontainer" >
+    <input type="radio" checked onchange="radiobuttonClicked(this)" id="packing" name="fav_language" value="packing">
+      <label for="html">Packing</label><br>
+      <input type="radio" id="unpacking" onchange="radiobuttonClicked(this)" name="fav_language" value="unpacking">
+      <label for="css">UNPacking</label><br>
+ </div>
 <form onsubmit="return onSubmit(event)" enctype="multipart/form-data">
     <div class="file-input">
         <label for="myfile">Select a file:(.txt)</label>
@@ -43,7 +49,8 @@
        </table>
     </div>
     </div>
-    <button class="btn-merge">Merge</button> 
+    <button id="packbtn" class="btn-merge">Pack</button> 
+    <button id="unpackbtn" class="btn-merge disabled">Unpack</button> 
 
 </form>
 
@@ -68,7 +75,7 @@
 </div>
 </div>
 
-<script type="text/javascript" src="./index.js"></script>
+ 
  
 </body>
 

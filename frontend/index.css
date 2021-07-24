@@ -1,7 +1,7 @@
 .body{
     display: flex;
     justify-content: center;
-     height: 100%;
+     
      align-items: center;
 
 }
@@ -39,7 +39,7 @@
     position: absolute;
   }
   
-    label {
+    .file-input label {
     display: block;
     position: relative;
     width: 200px;
@@ -65,13 +65,13 @@
     color: #555;
   }
   
-  input:hover + label,
+  input[type="file"]:hover + label,
   input:focus + label {
     transform: scale(1.02);
   }
   
   /* Adding an outline to the label on focus */
-  input:focus + label {
+  input[type="file"]:focus + label {
     outline: 1px solid #000;
     outline: -webkit-focus-ring-color auto 2px;
   }
@@ -123,10 +123,10 @@
   }
 
   .filename{
-
-    
     font-size: x-large;
     color: black;
+    height: 100px;
+    overflow: scroll;
      
   }
 
@@ -182,4 +182,23 @@ table{
   border-collapse: separate;
     text-indent: initial;
     border-spacing: 2px;
+}
+
+.radioboxContainer{
+  display: flex;
+  justify-content: center;
+}
+
+.downloadFileList{
+  margin: 5px;
+  color: green;
+}
+
+.disabled{
+  cursor: not-allowed;
+  pointer-events: none;
+
+  /*Button disabled - CSS color class*/
+  color: #c0c0c0;
+  background-color: #ffffff;
 }

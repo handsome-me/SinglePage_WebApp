@@ -1,10 +1,12 @@
 console.log("javascript file is running......");
 const fileList=[];
+const filesAfterUnpacking=[];
 const mergedFile={
 data:"",
 name:""
 }
-
+var pack=true;
+var unpack=false;
  
   
 
@@ -24,7 +26,14 @@ if(fileName){
 
   }
   
+} 
+if(fileList.length>0 && unpack){
+
+  alert('please upload only one file for umpacking',unpack);
+  window.location.reload();
+  return;
 }
+ 
 fileList.push(event.target.files[0]);
 
   makeTableRow(fileName,"#");
@@ -36,15 +45,61 @@ function onSubmit(event){
     if(fileList.length===0)
     return;
     
+    if(unpack){
+       console.log('unapcking file...');
+      readFileForUnpacking(fileList[0],()=>{
+        console.log("unpacked files",filesAfterUnpacking)
+        filesAfterUnpacking.forEach(()=>{
+          loader.classList.remove('disable-loader');
+          setTimeout(createMergeFileDivInDownloadContainer,2000)
+        })
+      })
 
-    console.log("file is submitted............",event.target.myfile);
-    handleFileLoad(event);
-}
+    }else{
+      handleFileLoad(event);
 
-function handleFileSelect(event) {
-   const f1=document.querySelector('input').files[0];
+    }
      
+    console.log("file is submitted............",event.target.myfile);
+     
+}
+ 
+
+//we need to read file line by line to unpack
+function readFileForUnpacking(file, callBack){
   
+  let fileData="";
+
+  const reader = new FileReader()
+  reader.onload =(event)=>{
+   fileData+= event.target.result;
+  // console.log("reading file",event.target.result);
+      const allLinesInFile=fileData.split("\n");
+       console.log(allLinesInFile);
+     let  holdDataTillLineBreak="";
+      let count=0;
+      allLinesInFile.forEach((line,index)=>{
+            
+             
+              //make the file with the holdDataTillbreak and push it to unpackfile array
+              //make count=0; make holdataTillLINeBreak="";
+              if(line!=="")
+              {
+                filesAfterUnpacking.push({
+                  fileName:"unpackedFile",
+                  data:line
+                });
+              }
+            
+               
+            
+
+             
+      });
+      callBack();
+  }; 
+  reader.readAsText(file);
+
 }
 
 function readFileAndReturnStringOfFile(file, callBack){
@@ -72,7 +127,12 @@ function handleFileLoad (event) {
     readFileAndReturnStringOfFile(fileList[i],(fileDataAsString)=>{
       // debugger;
      mulitpleFileDataAsString+=fileDataAsString;
-     mulitpleFileDataAsString+="\n";
+       
+     if(i<fileList.length-1)
+       {
+        mulitpleFileDataAsString+="\n\n";
+       }
+    
        if(i===fileList.length-1){
         console.log("merged file data-> ",mulitpleFileDataAsString);
        // download("mergedFile.txt",mulitpleFileDataAsString);
@@ -84,61 +144,123 @@ function handleFileLoad (event) {
        console.log(loader);
        loader.classList.remove('disable-loader');
        setTimeout( createMergeFileDivInDownloadContainer,2000)
-
+           
        }
       
    })
   }
 
      //diabled loader
-     
-     function createMergeFileDivInDownloadContainer(){
-
-      
-      
-      //create div , assign it to download container with download button and merge file name
-      const mergedFileDiv=document.getElementById('downloadContainer');
-      console.log(mergedFileDiv);
-
-     const fileName= document.getElementById('filename');
-     fileName.innerHTML=`<h3>FileName-_mergedfile_txt</h3>`
-      
-      const downloadBtn=document.getElementById('downloadbtn');
     
-      downloadBtn.classList.remove('btn-download-disabled');
-      downloadBtn.classList.add('btn-download-allowed');
-      
-     // downloadBtn.onclick(download(mergedFileDiv.name, mergedFileDiv.data))
-      downloadBtn.addEventListener('click',()=>download(mergedFile.name,mergedFile.data))
-       const loader=document.getElementById('loader');
-       
-      loader.classList.add('disable-loader');
-       
-       
-
-     }
-
-
 
    
  // download("meghraj.txt",event.target.result);
    
 }
 
+
+function createMergeFileDivInDownloadContainer(){
+  const mergedFileDiv=document.getElementById('downloadContainer');
+      
+      if(unpack){
+        
+        console.log(mergedFileDiv);
+      
+       const fileName= document.getElementById('filename');
+       const h3=document.createElement("div");
+       h3.classList.add("downloadFileList");
+        h3.innerHTML=`FileName- ${+Math.random()}_mergedfile_txt`;
+       fileName.appendChild(h3)
+
+      }else{
+     
+        console.log(mergedFileDiv);
+      
+       const fileName= document.getElementById('filename');
+       fileName.innerHTML=`<h3>FileName-_mergedfile_txt</h3>`
+
+      }
+  //creaelsete div , assign it to download container with download button and merge file name
+  
+  
+  const downloadBtn=document.getElementById('downloadbtn');
+
+  downloadBtn.classList.remove('btn-download-disabled');
+  downloadBtn.classList.add('btn-download-allowed');
+  
+ // downloadBtn.onclick(download(mergedFileDiv.name, mergedFileDiv.data))
+   
+  downloadBtn.addEventListener('click',()=>download(mergedFile.name,mergedFile.data))
+   const loader=document.getElementById('loader');
+   
+  loader.classList.add('disable-loader');
+   
+   
+
+ }
+
 function download() {
-  const filename=mergedFile.name;
-  const text=mergedFile.data
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
+  console.log('into download');
+  if(pack)
+  { 
+    const filename=mergedFile.name;
+    const text=mergedFile.data
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
 
-  element.style.display = 'none';
-  document.body.appendChild(element);
+  }else{
+    if(unpack){
+     filesAfterUnpacking.forEach((file)=>{
 
-  element.click();
+      const filename=file.fileName;
+    const text=file.data
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+     })
 
-  document.body.removeChild(element);
+
+    }
+  }
+  
+
   window.location.reload();
+}
+
+function radiobuttonClicked(event){
+   
+  if(fileList.length>0 || filesAfterUnpacking.length>0){
+    window.location.reload();
+  }
+  console.log('radio button clicked....',event.value);
+  if(event.value==="packing"){
+    pack=true;
+    unpack=false;
+    document.getElementById('packbtn').classList.remove('disabled');
+    document.getElementById('unpackbtn').classList.add('disabled');
+
+  }else{
+    pack=false;
+    unpack=true;
+    document.getElementById('unpackbtn').classList.remove('disabled');
+    document.getElementById('packbtn').classList.add('disabled');
+  }
+
 }
 
 
