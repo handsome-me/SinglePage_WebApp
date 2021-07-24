@@ -1,6 +1,6 @@
 console.log("javascript file is running......");
 const fileList=[];
-const filesAfterUnpacking=[];
+let filesAfterUnpacking=[];
 const mergedFile={
 data:"",
 name:""
@@ -47,12 +47,16 @@ function onSubmit(event){
     
     if(unpack){
        console.log('unapcking file...');
+        
       readFileForUnpacking(fileList[0],()=>{
         console.log("unpacked files",filesAfterUnpacking)
-        filesAfterUnpacking.forEach(()=>{
-          loader.classList.remove('disable-loader');
-          setTimeout(createMergeFileDivInDownloadContainer,2000)
-        })
+        loader.classList.remove('disable-loader');
+         setTimeout(()=>{
+           
+           createMergeFileDivInDownloadContainer()
+           makeDownloadButton();
+          
+         },2000)
       })
 
     }else{
@@ -143,7 +147,11 @@ function handleFileLoad (event) {
        //eneable loader
        console.log(loader);
        loader.classList.remove('disable-loader');
-       setTimeout( createMergeFileDivInDownloadContainer,2000)
+       setTimeout( ()=>{
+
+         createMergeFileDivInDownloadContainer();
+         makeDownloadButton();
+       },2000)
            
        }
       
@@ -165,12 +173,13 @@ function createMergeFileDivInDownloadContainer(){
       if(unpack){
         
         console.log(mergedFileDiv);
-      
+      for(let i=0;i<filesAfterUnpacking.length;i++){
        const fileName= document.getElementById('filename');
        const h3=document.createElement("div");
        h3.classList.add("downloadFileList");
         h3.innerHTML=`FileName- ${+Math.random()}_mergedfile_txt`;
        fileName.appendChild(h3)
+      }
 
       }else{
      
@@ -183,6 +192,13 @@ function createMergeFileDivInDownloadContainer(){
   //creaelsete div , assign it to download container with download button and merge file name
   
   
+   
+   
+
+ }
+
+ function makeDownloadButton(){
+   
   const downloadBtn=document.getElementById('downloadbtn');
 
   downloadBtn.classList.remove('btn-download-disabled');
@@ -194,8 +210,6 @@ function createMergeFileDivInDownloadContainer(){
    const loader=document.getElementById('loader');
    
   loader.classList.add('disable-loader');
-   
-   
 
  }
 
@@ -232,8 +246,10 @@ function download() {
     element.click();
   
     document.body.removeChild(element);
+      
      })
-
+    
+     filesAfterUnpacking=[];
 
     }
   }
